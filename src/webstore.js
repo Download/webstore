@@ -55,7 +55,7 @@ WebStore.prototype.load = function WebStore_load() {
 	if (storageAvailable('localStorage')) {
 		for(var i=0; i<localStorage.length; i++) {
 			var key = localStorage.key(i);
-			if (key.startsWith(this.id)) {
+			if (key.indexOf(this.id) === 0) {
 				var value = localStorage.getItem(key);
 				value = deserialize(value, this.config.reviver);
 				this.setItem(key.substring(this.id.length), value);
@@ -116,7 +116,7 @@ function serialize(value) {
 
 function deserialize(value, reviver) {
 	// W3C-compliant types (only string)
-	if (!value.startsWith(W3CX)) {return value;}
+	if (value.indexOf(W3CX)) {return value;}
 	// deal with other types
 	var result = JSON.parse(value.substring(W3CX.length), reviver);
 	return result;
