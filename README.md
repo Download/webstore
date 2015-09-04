@@ -49,7 +49,7 @@ npm install webstore --save-dev
 
 ```javascript
 var WebStore = require('webstore');
-`
+```
 
 ## Creating a webstore object
 The `WebStore` function creates (or returns) a storage object implementing the W3C Web Storage API.
