@@ -199,9 +199,19 @@ but once you have one, telling WebStore to use your reviver instead of
 the basic reviver is a one-liner:
 
 ```javascript
-var old = store.config.reviver; // You can optionally save the old reviver...
-store.config.reviver = mySpiffyReviver; // Assign your own reviver
+var Store = new WebStore('my-store', {reviver: mySpiffyReviver});
 ```
+
+If you need access to the old reviver, you can pick it up after creating the store
+and then assign your new reviver:
+
+```javascript
+var Store = new WebStore('my-store');
+var oldReviver = store.config.reviver; // Save the old reviver...
+store.config.reviver = mySpiffyReviver; // Assign your new reviver
+```
+
+Make sure you don't save data with one reviver and then attempt to load it with another. It won't work.
 
 #### Customizing JSON (de)serialization
 WebStore adds a property named `__w3cx_ctor__` to the serialized JSON of objects 
