@@ -1,5 +1,5 @@
 # webstore <sub><sup>v0.9.0</sup></sub>
-One-stop shop for [Web Storage API](http://www.w3.org/TR/webstorage/) compliant persistence. 
+**One-stop shop for [Web Storage API](http://www.w3.org/TR/webstorage/) compliant persistence.**
 [Project website](http://download.github.io/webstore)
 
 WebStore builds on top of [MemoryStorage](https://download.github.io/memorystorage), 
