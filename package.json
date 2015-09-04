@@ -1,0 +1,55 @@
+{
+  "name": "webstore",
+  "version": "0.0.1",
+  "description": "One stop shop for Web Storage API compliant persistence.",
+  "main": "src/webstore.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dist": {
+    "dbg": "dist/webstore.js",
+    "min": "dist/webstore.min.js",
+    "map": "dist/webstore.min.js.map"
+  },
+  "exports": [
+    "WebStore"
+  ],
+  "directories": {
+    "test": "tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/download/webstore.git"
+  },
+  "keywords": [
+    "javascript",
+    "persistence",
+    "persistent objects",
+    "localStorage",
+    "Web Storage API"
+  ],
+  "author": {
+    "name": "Stijn de Witt",
+    "email": "StijnDeWitt@hotmail.com",
+    "url": "http://StijnDeWitt.com"
+  },
+  "contributors": [],
+  "copyright": "Copyright 2015 by [Stijn de Witt](http://StijnDeWitt.com). Some rights reserved.",
+  "license": "CC-BY-4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+  "bugs": {
+    "url": "https://github.com/download/webstore/issues"
+  },
+  "homepage": "https://github.com/download/webstore#readme",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-browserify": "^4.0.0",
+    "grunt-contrib-jshint": "~0.10.0",
+    "grunt-contrib-uglify": "~0.6.0",
+    "grunt-jsdoc": "~0.6.7",
+    "load-grunt-tasks": "~1.0.0"
+  },
+  "dependencies": {
+    "memorystorage": "^0.9.4"
+  }
+}
