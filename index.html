@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="Webstore : One stop shop for Web Storage API compliant persistence.">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Webstore</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/Download/webstore">View on GitHub</a>
+
+          <h1 id="project_title">Webstore</h1>
+          <h2 id="project_tagline">One stop shop for Web Storage API compliant persistence.</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/Download/webstore/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/Download/webstore/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a id="webstore-v090" class="anchor" href="#webstore-v090" aria-hidden="true"><span class="octicon octicon-link"></span></a>webstore <sub><sup>v0.9.0</sup></sub>
+</h1>
+
+<p><strong>One-stop shop for <a href="http://www.w3.org/TR/webstorage/">Web Storage API</a> compliant persistence.</strong>
+<a href="http://download.github.io/webstore">Project website</a></p>
+
+<p>WebStore builds on top of <a href="https://download.github.io/memorystorage">MemoryStorage</a>, 
+adding persistence to it in the form of <code>load</code> and <code>save</code> methods.</p>
+
+<p>For now loading and saving is explicit, so you will be able to fully control when it happens. 
+I am thinking of some <code>autoPersist</code> option (maybe together with a strategy, or some settings) 
+to have WebStore handle it for you, but that functionality is not there yet.</p>
+
+<p>WebStore was built for performance. As it basically performs all operations in-memory, the overhead
+of using it should be near zero as long as you don't save or load. When you do save or load, <code>localStorage</code>
+is used so you will get the normal performance associated with such I/O. </p>
+
+<p>Having the data actually survive page reloads and browser sessions is a secondary concern. Users can wipe 
+their browser caches and use private browsing modes, so we need to consider the option of the data
+being gone anyway. I recommend storing the data on the server by means of an Ajax call if it is really
+important and only using local storage as a glorified cache.</p>
+
+<p>Currently, WebStore does not handle synchronization of data between multiple tabs. This
+means you should either limit your use to single-page-apps, use isolated stores for different
+pages, or come up with some synchronization system yourself.</p>
+
+<h2>
+<a id="download" class="anchor" href="#download" aria-hidden="true"><span class="octicon octicon-link"></span></a>Download</h2>
+
+<ul>
+<li>
+<a href="https://cdn.rawgit.com/download/webstore/0.9.0/dist/webstore.js">webstore.js</a> (~10kB, commented)</li>
+<li>
+<a href="https://cdn.rawgit.com/download/webstore/0.9.0/dist/webstore.min.js">webstore.min.js</a> (~3kB, minified)</li>
+<li>
+<a href="https://cdn.rawgit.com/download/webstore/0.9.0/dist/webstore.min.js.map">webstore.min.js.map</a> (~3kB, debug map file)</li>
+</ul>
+
+<h2>
+<a id="include-on-your-page" class="anchor" href="#include-on-your-page" aria-hidden="true"><span class="octicon octicon-link"></span></a>Include on your page</h2>
+
+<p><code>webstore</code> can be used directly from CDN, or from a local script file.</p>
+
+<h3>
+<a id="cdn" class="anchor" href="#cdn" aria-hidden="true"><span class="octicon octicon-link"></span></a>CDN</h3>
+
+<div class="highlight highlight-xml"><pre>&lt;<span class="pl-ent">script</span> <span class="pl-e">src</span>=<span class="pl-s"><span class="pl-pds">"</span>https://cdn.rawgit.com/download/webstore/0.9.0/dist/webstore.min.js<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">script</span>&gt;</pre></div>
+
+<h3>
+<a id="local-script-file" class="anchor" href="#local-script-file" aria-hidden="true"><span class="octicon octicon-link"></span></a>Local script file</h3>
+
+<p>Download webstore.min.js, place it in a folder <code>lib</code> in the root of your website and include it like this:</p>
+
+<div class="highlight highlight-xml"><pre>&lt;<span class="pl-ent">script</span> <span class="pl-e">src</span>=<span class="pl-s"><span class="pl-pds">"</span>/lib/webstore.min.js<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">script</span>&gt;</pre></div>
+
+<h3>
+<a id="use-with-npm-or-bower" class="anchor" href="#use-with-npm-or-bower" aria-hidden="true"><span class="octicon octicon-link"></span></a>Use with NPM or Bower</h3>
+
+<p><code>npm install webstore</code></p>
+
+<h2>
+<a id="creating-a-webstore-object" class="anchor" href="#creating-a-webstore-object" aria-hidden="true"><span class="octicon octicon-link"></span></a>Creating a webstore object</h2>
+
+<p>The <code>WebStore</code> function creates (or returns) a storage object implementing the W3C Web Storage API.
+By default, scripts share a <code>global</code> storage object, so scripts can access and mutate each other's store
+object. To have WebStore create a storage object that is isolated from other scripts, you pass in
+a unique ID which acts as a namespace:</p>
+
+<div class="highlight highlight-javascript"><pre><span class="pl-k">var</span> isolated <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">WebStore</span>(<span class="pl-s"><span class="pl-pds">'</span>my-app<span class="pl-pds">'</span></span>); <span class="pl-c">// isolated from other scripts, recommended.</span></pre></div>
+
+<p>If you don't pass in an ID, or use the ID <code>'global'</code>, you get a globally shared storage object:</p>
+
+<div class="highlight highlight-javascript"><pre><span class="pl-k">var</span> <span class="pl-c1">global</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">WebStore</span>(); <span class="pl-c">// will default to a globally shared storage object.</span>
+<span class="pl-k">var</span> global2 <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">WebStore</span>(<span class="pl-s"><span class="pl-pds">'</span>global<span class="pl-pds">'</span></span>); <span class="pl-c">// effectively same as above</span></pre></div>
+
+<p>For your convenience, the constructor permits <code>new</code>-less invocation:</p>
+
+<div class="highlight highlight-javascript"><pre><span class="pl-k">var</span> store <span class="pl-k">=</span> WebStore(<span class="pl-s"><span class="pl-pds">'</span>my-store<span class="pl-pds">'</span></span>);
+<span class="pl-k">var</span> <span class="pl-c1">global</span> <span class="pl-k">=</span> WebStore();</pre></div>
+
+<p>Instances of <code>WebStore</code> expose an immutable <code>id</code> property that is set to
+the id the store was created with:</p>
+
+<div class="highlight highlight-javascript"><pre><span class="pl-c1">alert</span>(store.<span class="pl-c1">id</span>); <span class="pl-c">// alerts 'my-store'</span>
+<span class="pl-c1">alert</span>(<span class="pl-c1">global</span>.<span class="pl-c1">id</span>); <span class="pl-c">// alerts 'global'</span></pre></div>
+
+<h2>
+<a id="loading-the-store" class="anchor" href="#loading-the-store" aria-hidden="true"><span class="octicon octicon-link"></span></a>Loading the store</h2>
+
+<p>WebStore builds on top of <a href="https://download.github.io/memorystorage">MemoryStorage</a>. 
+As such, all operations are performed in local memory and super-fast. But it also
+means that we have to make sure our changes are loaded before we start, and saved
+once we are done. I'm thinking about and experimenting with mechanisms to take care
+of this for you, but for now you will explicitly have to call the <code>load</code> method yourself.</p>
+
+<div class="highlight highlight-javascript"><pre><span class="pl-k">var</span> store <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">WebStore</span>(<span class="pl-s"><span class="pl-pds">'</span>my-store<span class="pl-pds">'</span></span>);
+store.<span class="pl-c1">load</span>();</pre></div>
+
+<h2>
+<a id="using-the-store" class="anchor" href="#using-the-store" aria-hidden="true"><span class="octicon octicon-link"></span></a>Using the store</h2>
+
+<p>Once you have loaded the store, you can use it just as you would <code>localStorage</code>
+or any other store implementing Web Storage:</p>
+
+<div class="highlight highlight-javascript"><pre>store.setItem(<span class="pl-s"><span class="pl-pds">'</span>myString<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>Hello WebStore!<span class="pl-pds">'</span></span>);
+store.myObject <span class="pl-k">=</span> <span class="pl-c1">JSON</span>.stringify({my<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>object<span class="pl-pds">'</span></span>}));
+<span class="pl-c1">alert</span>(store.getItem(<span class="pl-s"><span class="pl-pds">'</span>My string<span class="pl-pds">'</span></span>)); <span class="pl-c">// alerts 'Hello MemoryStorage!'</span>
+<span class="pl-c1">alert</span>(store[<span class="pl-s"><span class="pl-pds">'</span>My string<span class="pl-pds">'</span></span>]); <span class="pl-c">// alerts 'Hello MemoryStorage!'</span>
+<span class="pl-c1">alert</span>(store.<span class="pl-c1">length</span>); <span class="pl-c">// alerts '2'</span>
+<span class="pl-c1">alert</span>(store.key(<span class="pl-c1">1</span>)); <span class="pl-c">// alerts 'My object'</span>
+store.removeItem(<span class="pl-s"><span class="pl-pds">'</span>My string<span class="pl-pds">'</span></span>);
+<span class="pl-c1">alert</span>(store.<span class="pl-c1">length</span>); <span class="pl-c">// alerts '1'</span>
+store.<span class="pl-c1">clear</span>();
+<span class="pl-c1">alert</span>(store.<span class="pl-c1">length</span>); <span class="pl-c">// alerts '0'</span></pre></div>
+
+<h2>
+<a id="saving-the-store" class="anchor" href="#saving-the-store" aria-hidden="true"><span class="octicon octicon-link"></span></a>Saving the store</h2>
+
+<p>When you are done writing to the store, call <code>save</code> to persist the data to <code>localStorage</code>:</p>
+
+<div class="highlight highlight-javascript"><pre>store.save();</pre></div>
+
+<p>If you don't mind some risk of losing the data, you could bind the <code>load</code> and <code>save</code> methods
+to the <code>load</code>, <code>beforeunload</code>, <code>pageshow</code> and <code>pagehide</code> events. Note that WebKit will often
+fire both <code>pagehide</code> and <code>beforeunload</code>, but not always. Currently I feel the best strategy would
+be to bind to all events and just make sure we don't run save twice ourselves.</p>
+
+<h2>
+<a id="beyond-the-web-storage-api" class="anchor" href="#beyond-the-web-storage-api" aria-hidden="true"><span class="octicon octicon-link"></span></a>Beyond the Web Storage API</h2>
+
+<p>WebStore is type-agnostic; it doesn't care about the type of data you store. 
+If you want to remain within the Web Storage API, you should only read and write strings, 
+however if you want you can store other types just as well.</p>
+
+<h3>
+<a id="storing-basic-types" class="anchor" href="#storing-basic-types" aria-hidden="true"><span class="octicon octicon-link"></span></a>Storing basic types</h3>
+
+<div class="highlight highlight-javascript"><pre>store.myNumber <span class="pl-k">=</span> <span class="pl-c1">17</span>;
+<span class="pl-c1">alert</span>(store.myNumber <span class="pl-k">+</span> <span class="pl-c1">3</span>); <span class="pl-c">// alerts '20' (not '173')</span>
+store.myDate <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">Date</span>();
+
+store.myObject <span class="pl-k">=</span> {my<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>object<span class="pl-pds">'</span></span>};
+<span class="pl-c1">alert</span>(store.myObject.my); <span class="pl-c">// alerts 'object'</span>
+<span class="pl-k">var</span> tree <span class="pl-k">=</span> {
+    nested<span class="pl-k">:</span> {
+        objects<span class="pl-k">:</span> {
+            working<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>Sure!<span class="pl-pds">'</span></span>
+        }
+    }
+}
+store.setItem(<span class="pl-s"><span class="pl-pds">'</span>tree<span class="pl-pds">'</span></span>, tree);
+<span class="pl-c1">alert</span>(store.tree.nested.objects.working); <span class="pl-c">// alerts 'Sure!'</span></pre></div>
+
+<p>WebStore even handles custom types:</p>
+
+<div class="highlight highlight-javascript"><pre><span class="pl-c">// A custom type</span>
+<span class="pl-k">function</span> <span class="pl-en">Greeter</span>(<span class="pl-smi">name</span>) {
+    <span class="pl-v">this</span>.<span class="pl-c1">name</span> <span class="pl-k">=</span> name;
+    <span class="pl-c1">this</span>.<span class="pl-en">greet</span> <span class="pl-k">=</span> <span class="pl-k">function</span> <span class="pl-en">Greeter_greet</span>() {
+        <span class="pl-k">return</span> <span class="pl-s"><span class="pl-pds">'</span>Hello, <span class="pl-pds">'</span></span> <span class="pl-k">+</span> <span class="pl-v">this</span>.<span class="pl-c1">name</span> <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">'</span>!<span class="pl-pds">'</span></span>;
+    };
+};
+
+<span class="pl-c">// Add to the store and save</span>
+<span class="pl-k">var</span> store <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">WebStore</span>(<span class="pl-s"><span class="pl-pds">'</span>local<span class="pl-pds">'</span></span>);
+store.customData <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">Greeter</span>(<span class="pl-s"><span class="pl-pds">'</span>WebStore<span class="pl-pds">'</span></span>);
+store.save();
+
+<span class="pl-c">// Later on... possibly in a new browsing session</span>
+<span class="pl-k">var</span> store <span class="pl-k">-</span> <span class="pl-k">new</span> <span class="pl-en">WebStore</span>(<span class="pl-s"><span class="pl-pds">'</span>local<span class="pl-pds">'</span></span>);
+store.<span class="pl-c1">load</span>();
+<span class="pl-c1">alert</span>(store.customData.greet()); <span class="pl-c">// alerts 'Hello, WebStore!'</span></pre></div>
+
+<h3>
+<a id="dealing-with-non-public-types" class="anchor" href="#dealing-with-non-public-types" aria-hidden="true"><span class="octicon octicon-link"></span></a>Dealing with non-public types</h3>
+
+<p>When saved, WebStore serializes it's data to JSON and saves it in localStorage.
+Some extra data is added to allow WebStore to find out what the name was of the
+constructor used to create the object to be stored (class name in Java-speak). 
+When the data is deserialized, WebStore uses JSON.parse with a custom <code>reviver</code>
+function, which can be found on the store config:</p>
+
+<p><code>store.config.reviver;  // --&gt; function basicReviver(key, value)</code></p>
+
+<p>To restore the original type, WebStore will try to get the constructor from the
+window object using its name. If your types are not available on the window object, 
+there are two thing you can do:</p>
+
+<ol>
+<li>Add the type to the <code>constructors</code> object on the basic reviver</li>
+<li>Replace the basic reviver with your own version.</li>
+</ol>
+
+<h4>
+<a id="adding-your-private-type-to-the-basic-reviver" class="anchor" href="#adding-your-private-type-to-the-basic-reviver" aria-hidden="true"><span class="octicon octicon-link"></span></a>Adding your private type to the basic reviver</h4>
+
+<p>Simply add your constructor function to the <code>constructors</code> property on the basic
+reviver, keyed by name:</p>
+
+<div class="highlight highlight-javascript"><pre><span class="pl-k">function</span> <span class="pl-en">MyPrivateConstructor</span>() {
+  <span class="pl-c">// do secret stuff here</span>
+}
+
+store.config.reviver.constructors.MyPrivateConstructor <span class="pl-k">=</span> MyPrivateConstructor;</pre></div>
+
+<h4>
+<a id="replacing-the-basic-reviver-with-your-own-one" class="anchor" href="#replacing-the-basic-reviver-with-your-own-one" aria-hidden="true"><span class="octicon octicon-link"></span></a>Replacing the basic reviver with your own one.</h4>
+
+<p>Writing a good JSON reviver is not easy and out of scope for these docs, 
+but once you have one, telling WebStore to use your reviver instead of 
+the basic reviver is a one-liner:</p>
+
+<div class="highlight highlight-javascript"><pre><span class="pl-k">var</span> Store <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">WebStore</span>(<span class="pl-s"><span class="pl-pds">'</span>my-store<span class="pl-pds">'</span></span>, {reviver<span class="pl-k">:</span> mySpiffyReviver});</pre></div>
+
+<p>If you need access to the old reviver, you can pick it up after creating the store
+and then assign your new reviver:</p>
+
+<div class="highlight highlight-javascript"><pre><span class="pl-k">var</span> Store <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">WebStore</span>(<span class="pl-s"><span class="pl-pds">'</span>my-store<span class="pl-pds">'</span></span>);
+<span class="pl-k">var</span> oldReviver <span class="pl-k">=</span> store.config.reviver; <span class="pl-c">// Save the old reviver...</span>
+store.config.reviver <span class="pl-k">=</span> mySpiffyReviver; <span class="pl-c">// Assign your new reviver</span></pre></div>
+
+<p>Make sure you don't save data with one reviver and then attempt to load it with another. It won't work.</p>
+
+<h4>
+<a id="customizing-json-deserialization" class="anchor" href="#customizing-json-deserialization" aria-hidden="true"><span class="octicon octicon-link"></span></a>Customizing JSON (de)serialization</h4>
+
+<p>WebStore adds a property named <code>__w3cx_ctor__</code> to the serialized JSON of objects 
+that have a custom type, so it's basic reviver knows how to restore them. If you
+want to customize what the JSON looks like, you can do so by implementing a <code>toJSON</code>
+method on your objects, and a <code>fromJSON</code> method on your constructor.</p>
+
+<h2>
+<a id="copyright" class="anchor" href="#copyright" aria-hidden="true"><span class="octicon octicon-link"></span></a>Copyright</h2>
+
+<p>Copyright 2015 by Stijn de Witt. Some rights reserved.</p>
+
+<h2>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h2>
+
+<p>Licensed under the <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International (CC-BY-4.0)</a> Open Source license.</p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Webstore maintained by <a href="https://github.com/Download">Download</a></p>
+        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
