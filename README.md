@@ -1,4 +1,4 @@
-# webstore <sub><sup>v0.9.0</sup></sub>
+# webstore <sub><sup>v0.9.1</sup></sub>
 **One-stop shop for [Web Storage API](http://www.w3.org/TR/webstorage/) compliant persistence.**
 [Project website](http://download.github.io/webstore)
 
@@ -24,16 +24,16 @@ pages, or come up with some synchronization system yourself.
 
 
 ## Download
-* [webstore.js](https://cdn.rawgit.com/download/webstore/0.9.0/dist/webstore.js) (~10kB, commented)
-* [webstore.min.js](https://cdn.rawgit.com/download/webstore/0.9.0/dist/webstore.min.js) (~3kB, minified)
-* [webstore.min.js.map](https://cdn.rawgit.com/download/webstore/0.9.0/dist/webstore.min.js.map) (~3kB, debug map file)
+* [webstore.js](https://cdn.rawgit.com/download/webstore/0.9.1/dist/webstore.js) (~10kB, commented)
+* [webstore.min.js](https://cdn.rawgit.com/download/webstore/0.9.1/dist/webstore.min.js) (~3kB, minified)
+* [webstore.min.js.map](https://cdn.rawgit.com/download/webstore/0.9.1/dist/webstore.min.js.map) (~3kB, debug map file)
 
 ## Include on your page
 `webstore` can be used directly from CDN, or from a local script file.
 
 ### CDN
 ```xml
-<script src="https://cdn.rawgit.com/download/webstore/0.9.0/dist/webstore.min.js"></script>
+<script src="https://cdn.rawgit.com/download/webstore/0.9.1/dist/webstore.min.js"></script>
 ```
 
 ### Local script file
@@ -42,8 +42,14 @@ Download webstore.min.js, place it in a folder `lib` in the root of your website
 <script src="/lib/webstore.min.js"></script>
 ```
 
-### Use with NPM or Bower
-`npm install webstore`
+### Use with NPM / Browserify
+```shell
+npm install webstore --save-dev
+```
+
+```javascript
+var WebStore = require('webstore');
+`
 
 ## Creating a webstore object
 The `WebStore` function creates (or returns) a storage object implementing the W3C Web Storage API.
