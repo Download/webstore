@@ -106,12 +106,12 @@ QUnit.test("Basic Test: Beyond W3C API", function( assert ) {
 	window.Greeter = function Greeter(name) {
 		this.name = name;
 		this.greet = function Greeter_greet() {
-			console.info('Hello, ' + this.name + '!');
+			return 'Hello, ' + this.name + '!';
 		};
 	};
 	store.customTypedObject = new Greeter('Custom Type');
 	
 	// In the next test (in test-persistence.js), we'll see if this data survived reload
-	store.flush();
+	store.save();
 });
 

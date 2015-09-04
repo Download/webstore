@@ -64,7 +64,7 @@ WebStore.prototype.load = function WebStore_load() {
 	}
 };
 
-WebStore.prototype.flush = function WebStore_flush() {
+WebStore.prototype.save = function WebStore_save() {
 	if (storageAvailable('localStorage')) {
 		for(var i=0; i<this.length; i++) {
 			var key = this.key(i),
@@ -141,7 +141,7 @@ function basicReviver(key, value) {
 basicReviver.constructors = {};
 
 function fromJSON(ctor, data) {
-	var obj = Object.create(ctor.prototype),
+	var obj = new ctor(),
 		keys = Object.keys(data);
 	for (var i=0,key; key=keys[i]; i++) {
 		obj[key] = data[key];

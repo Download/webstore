@@ -18,13 +18,15 @@ QUnit.test("Persistence Test - Basic types", function( assert ) {
 });
 
 QUnit.test("Persistence Test - Custom types", function( assert ) {
-	var store = new WebStore('local');
+	// The custom type we want to restore
 	window.Greeter = function Greeter(name) {
 		this.name = name;
 		this.greet = function Greeter_greet() {
-			console.info('Hello, ' + this.name + '!');
+			return 'Hello, ' + this.name + '!';
 		};
 	};
+	var store = new WebStore('local');
 	store.load();
-	assert.ok(store.customTypedObject instanceof Greeter, 'Custom typed object data survived reload');
+	assert.ok(store.customTypedObject instanceof Greeter, 'Custom typed object has correct type');
+	assert.ok(store.customTypedObject.greet() === 'Hello, Custom Type!', 'Custom typed object data survived reload');
 });
